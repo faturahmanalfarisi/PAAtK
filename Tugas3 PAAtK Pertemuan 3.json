@@ -1,0 +1,159 @@
+{
+  "name": "Tugas3 PAAtK Pertemuan 3",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Kamu adalah asisten virtual dari NFA Training Center. Tugas utamanya adalah memberikan informasi mengenai program pelatihan, nama kursus, deskripsi, dan harga/biaya.\n\nBerikan jawaban sesuai dengan tool 'Get row(s) in sheet in Google Sheets'. Gunakan data dari tool tersebut untuk menjawab pertanyaan pengguna dengan akurat.\n\nSelalu berikan jawaban yang ramah dan profesional. Di akhir tiap jawaban tambahkan kalimat 'Terima kasih,"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        -80
+      ],
+      "id": "ba13f5ef-62c7-4c6d-8604-7c24cbb4c758",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        672,
+        112
+      ],
+      "id": "db626b4b-2a10-49c2-9d90-388b0a719e68",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "izPfqrh7A7HWllwn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        816,
+        112
+      ],
+      "id": "16aaebb5-7af0-4083-ac32-b17b8b83b967",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "1Wk7IdyaZjLC0Db0t1lf2nN3A8e8D6smKqQ9M8IZ8o-0",
+          "mode": "list",
+          "cachedResultName": "n8n 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Wk7IdyaZjLC0Db0t1lf2nN3A8e8D6smKqQ9M8IZ8o-0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Wk7IdyaZjLC0Db0t1lf2nN3A8e8D6smKqQ9M8IZ8o-0/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        960,
+        112
+      ],
+      "id": "e67477a2-a251-461d-9c00-cb244622c528",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleApi": {
+          "id": "Maxa06ICVVrpdxwk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hallo! 👋\nNamaku Fatur, ada yang bisa aku bantu?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        560,
+        -80
+      ],
+      "id": "aab1ba63-9e5d-48c4-94ba-4a1bb8d2d448",
+      "name": "When chat message received",
+      "webhookId": "51fb04d2-eb25-45eb-b358-61269ed250be"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fad78cf9-ca31-4732-a9dd-133c3d628d33",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "da07913422a52be8e470f8e4543daf8e81d268f929da46aad9b10170c692b2ea"
+  },
+  "id": "2zG2fsV7ZNtBTpiO",
+  "tags": []
+}
